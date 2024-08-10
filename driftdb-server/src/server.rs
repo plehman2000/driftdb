@@ -192,8 +192,44 @@ async fn connection(
     ws.on_upgrade(move |socket| handle_socket(socket, database, query))
 }
 
+
+//===========================
+
+use rand::{seq::SliceRandom, thread_rng};
+use std::fs;
+use std::env;
+
+fn random_room_id() -> String {
+
+    // Read the words from the file
+    // Get the current directory
+    let current_dir = env::current_dir().expect("Failed to get current directory");
+    println!("Current Directory: {}", current_dir.display());
+
+    // Construct the path to the file using the current directory
+    let file_path = current_dir.display().to_string() + "\\room_names.txt";
+
+    println!("Current filepath: {}", file_path);
+
+    // Read the words from the constructed file path
+    let words = fs::read_to_string(file_path)
+    .expect("Failed to read room_names.txt");
+    // Split the content by whitespace to get a vector of words
+    let mut words_vec: Vec<&str> = words.split_whitespace().collect();
+    
+    // Shuffle the words and pick three
+    let mut rng = thread_rng();
+    words_vec.shuffle(&mut rng);
+    
+    // Join the first three words with an optional separator (e.g., "-")
+    words_vec.iter().take(3).map(|s| *s).collect::<Vec<&str>>().join("-")
+}
+
+//===========================
 async fn new_room(Host(hostname): Host, State(room_map): State<Arc<RoomMap>>) -> Json<RoomResult> {
-    let room = Uuid::new_v4().to_string();
+    let room = random_room_id();
+
+
     let database = Arc::new(Database::new());
     room_map.insert(room.clone(), database);
 

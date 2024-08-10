@@ -46,7 +46,7 @@ pub fn handle_room(req: Request, ctx: RouteContext<()>) -> Result<Response> {
     }
 }
 
-/// Generate a random alphanumeric room ID.
+/ Generate a random alphanumeric room ID.
 fn random_room_id(length: usize) -> String {
     thread_rng()
         .sample_iter(&Alphanumeric)
@@ -54,6 +54,30 @@ fn random_room_id(length: usize) -> String {
         .map(char::from)
         .collect()
 }
+// use rand::{seq::SliceRandom, thread_rng};
+// use std::fs;
+
+// fn random_room_id(length: usize) -> String {
+
+//     // Read the words from the file
+//     let words = fs::read_to_string("room_names.txt")
+//         .expect("Failed to read room_names.txt");
+    
+//     // Split the content by whitespace to get a vector of words
+//     let mut words_vec: Vec<&str> = words.split_whitespace().collect();
+    
+//     // Shuffle the words and pick three
+//     let mut rng = thread_rng();
+//     words_vec.shuffle(&mut rng);
+    
+//     // Join the first three words with an optional separator (e.g., "-")
+//     words_vec.iter().take(3).map(|s| *s).collect::<Vec<&str>>().join("-")
+// }
+
+
+
+
+
 
 pub fn handle_new_room(req: Request, ctx: RouteContext<()>) -> Result<Response> {
     let configuration = Configuration::from_ctx(&ctx);

@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "driftdb-react": "^1.0.12"
+  }
+}

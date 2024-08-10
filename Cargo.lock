@@ -311,6 +311,7 @@ dependencies = [
  "dashmap",
  "driftdb",
  "hyper",
+ "rand",
  "serde",
  "serde_json",
  "tokio",
