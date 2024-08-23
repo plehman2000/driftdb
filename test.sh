@@ -45,3 +45,5 @@ cd ${BASE_DIR}/js-pkg/packages/driftdb
 DRIFTDB_API=http://127.0.0.1:8787 npm test -- --forceExit --detectOpenHandles
 
 kill ${WORKER_SERVER_PID}
+
+//cargo run -p driftdb-server
